@@ -1,0 +1,28 @@
+import java.sql.*;
+import java.util.*;
+class Retrive
+{  
+    public static void main (String[]args) throws ClassNotFoundException, SQLException 
+    {
+        Scanner sc = new Scanner (System.in);  
+        System.out.println ("ENTER ACCOUNT NUMBER");   
+        int ano = sc.nextInt ();
+        Class.forName ("oracle.jdbc.driver.OracleDriver");
+        Connection con = DriverManager.getConnection ("jdbc:oracle:thin:@localhost:1521:xe", "System", "ajay");
+        Statement st = con.createStatement ();    
+        ResultSet rs = st.executeQuery ("select * from account where accno =" + ano);
+        if (rs.next ())
+        { 
+            System.out.println ("account no:     " + rs.getInt (1));
+            System.out.println ("acc holder name:" + rs.getString (2));
+            System.out.println ("balance :       " + rs.getFloat (3)); 
+            System.out.println ("address:        " + rs.getString (4));      
+        }
+        else
+            System.out.println ("account doesnot exist");
+    
+        rs.close ();
+        st.close ();
+        con.close (); 
+    }
+}
